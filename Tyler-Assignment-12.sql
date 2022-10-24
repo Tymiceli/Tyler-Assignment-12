@@ -1,5 +1,7 @@
+-- Creating database
 create database pizza_restaurant;
 
+-- Creating tables
 create table pizza_restaurant.customers (
 customer_id int not null,
 customer_name varchar (32),
@@ -35,6 +37,7 @@ foreign key (order_id) references orders (order_id),
 foreign key (pizza_id) references pizzas (pizza_id)
 );
 
+-- Inserting data (customers, orders, pizzas, join table data)
 insert into pizza_restaurant.customers (customer_id, customer_name, phone_number)
 values (1, 'Trevor Page', '226-555-4982');
 
@@ -89,6 +92,7 @@ VALUES (2, 3, 2);
 INSERT INTO `pizza_restaurant`.`order_pizza` (`order_id`, `pizza_id`, `quantity`)
 VALUES (3, 4, 1);
 
+-- Testing tables
 SELECT * FROM `pizza_restaurant`.`customers`;
 
 SELECT * FROM `pizza_restaurant`.`orders`;
@@ -99,7 +103,7 @@ SELECT * FROM `pizza_restaurant`.`customer_order`;
 
 SELECT * FROM `pizza_restaurant`.`order_pizza`;
 
--- fully joining 
+-- Fully joining all tables
 select * from pizza_restaurant.customers cus
 join customer_order co on co.customer_id = cus.customer_id
 join orders ord on ord.order_id = co.order_id
