@@ -51,7 +51,7 @@ INSERT INTO `pizza_restaurant`.`orders` (`order_id`, `order_date`)
 VALUES (2, '9/10/2014 13:20:00');
 
 INSERT INTO `pizza_restaurant`.`orders` (`order_id`, `order_date`)
-VALUES (3, '9/10/2014 13:20:00');
+VALUES (3, '9/10/2014 09:47:00');
 
 INSERT INTO `pizza_restaurant`.`pizzas`(`pizza_id`, `pizza_name`, `pizza_price`)
 VALUES (1, 'Pepperoni & Cheese', 7.99);
