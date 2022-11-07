@@ -1,7 +1,5 @@
--- Creating database
 create database pizza_restaurant;
 
--- Creating tables
 create table pizza_restaurant.customers (
 customer_id int not null,
 customer_name varchar (32),
@@ -11,7 +9,7 @@ primary key customer_id (customer_id)
 
 create table pizza_restaurant.orders (
 order_id int not null,
-order_date varchar (20),
+order_date DATETIME,
 primary key order_id (order_id)
 );
 
@@ -37,7 +35,6 @@ foreign key (order_id) references orders (order_id),
 foreign key (pizza_id) references pizzas (pizza_id)
 );
 
--- Inserting data (customers, orders, pizzas, join table data)
 insert into pizza_restaurant.customers (customer_id, customer_name, phone_number)
 values (1, 'Trevor Page', '226-555-4982');
 
@@ -45,13 +42,13 @@ insert into pizza_restaurant.customers (customer_id, customer_name, phone_number
 values (2, 'John Doe', '555-555-9498');
 
 INSERT INTO `pizza_restaurant`.`orders` (`order_id`, `order_date`)
-VALUES (1, '9/10/2014 09:47:00');
+VALUES (1, '2014-10-09 09:47:00'); 
 
 INSERT INTO `pizza_restaurant`.`orders` (`order_id`, `order_date`)
-VALUES (2, '9/10/2014 13:20:00');
+VALUES (2, '2014-10-09 13:20:00');
 
 INSERT INTO `pizza_restaurant`.`orders` (`order_id`, `order_date`)
-VALUES (3, '9/10/2014 09:47:00');
+VALUES (3, '2014-10-09 13:20:00');
 
 INSERT INTO `pizza_restaurant`.`pizzas`(`pizza_id`, `pizza_name`, `pizza_price`)
 VALUES (1, 'Pepperoni & Cheese', 7.99);
@@ -92,7 +89,6 @@ VALUES (2, 3, 2);
 INSERT INTO `pizza_restaurant`.`order_pizza` (`order_id`, `pizza_id`, `quantity`)
 VALUES (3, 4, 1);
 
--- Testing tables
 SELECT * FROM `pizza_restaurant`.`customers`;
 
 SELECT * FROM `pizza_restaurant`.`orders`;
@@ -103,7 +99,7 @@ SELECT * FROM `pizza_restaurant`.`customer_order`;
 
 SELECT * FROM `pizza_restaurant`.`order_pizza`;
 
--- Fully joining all tables
+-- fully joining 
 select * from pizza_restaurant.customers cus
 join customer_order co on co.customer_id = cus.customer_id
 join orders ord on ord.order_id = co.order_id
@@ -123,7 +119,7 @@ join pizzas on pizzas.pizza_id = op.pizza_id
 group by cus.customer_id;
 
 -- THIS ANSWERS QUESTION 5
-select cus.customer_id, cus.customer_name, ord.order_date, sum(
+select cus.customer_id, cus.customer_name, convert(ord.order_date, date) as order_date_without_time, sum(
 case 
 	when quantity > 0 then quantity * pizza_price
     end) as total_order_price 
@@ -132,5 +128,5 @@ join customer_order co on co.customer_id = cus.customer_id
 join orders ord on ord.order_id = co.order_id
 join order_pizza op on op.order_id = ord.order_id
 join pizzas on pizzas.pizza_id = op.pizza_id
-group by cus.customer_id, ord.order_date
+group by cus.customer_id, order_date_without_time
 order by cus.customer_id;
